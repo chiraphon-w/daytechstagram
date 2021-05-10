@@ -8,13 +8,9 @@ import {
   } from 'typeorm';
   import * as bcrypt from 'bcrypt';
   
-  // map ข้อมูลกับตัว DB
-  // 1 table แทนด้วย 1 repo 1 entity
-  // entity กำหนดว่าจะมี column อะไรบ้าง
-  // เป็น schema
   @Entity()
   @Unique(['username'])
-  export class User extends BaseEntity {
+  export class Post extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
   
@@ -22,7 +18,12 @@ import {
     username: string;
   
     @Column()
-    password: string;
+    image: string;
   
+    @Column()
+    desc: string;
+  
+    @UpdateDateColumn()
+    updated: Date;
   }
   

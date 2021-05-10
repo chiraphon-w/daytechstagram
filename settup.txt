@@ -8,7 +8,27 @@ npm install multer fs-extra
 npm install bcrypt
 npm install @nestjs/jwt @nestjs/passport passport passport-jwt
 
+###
+  npm install :
+  npm i @nestjs/typeorm
+  npm i typeorm --save
+  npm i pg --save
+  npm i rxjs
+  npm i class-validator
+  npm i class-transformer
+  npm i change-case --save
 
+  nest create :
+  nest g module user --no-spec
+  nest g s user --no-spec
+  nest g co user --no-spec
+  nest g mo posts --no-spec
+  nest g s posts --no-spec
+  nest g co posts --no-spec
+  nest g mo comment --no-spec
+  nest g s comment --no-spec
+  nest g co comment --no-spec
+###
 
 
 ##########################################

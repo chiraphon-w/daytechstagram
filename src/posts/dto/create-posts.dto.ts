@@ -6,5 +6,4 @@ export class CreatePostsDto {
 
   @IsNotEmpty()
   image: string;
- 
 }

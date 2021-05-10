@@ -2,6 +2,7 @@ import { PostsService } from './posts.service';
 import {
   Body,
   Controller,
+  Get,
   Post,
   UseGuards,
   UsePipes,
@@ -17,8 +18,12 @@ export class PostsController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  signUp(@Body() createPostsDto: CreatePostsDto) {
+  async addPost(@Body() createPostsDto: CreatePostsDto) {
+    const post = await this.postsService.createPost(createPostsDto);
     // return this.usersService.signUp(createPostsDto);
-    console.log(createPostsDto);
+    // console.log(post);
+    await post.save();
+    return post;
   }
+
 }

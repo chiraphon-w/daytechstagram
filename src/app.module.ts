@@ -5,8 +5,6 @@ import { AppService } from './app.service';
 import { typeOrmConfig } from './config/typeorm.config';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
-import { UsersService } from './users/users.service';
-import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -16,7 +14,7 @@ import { UsersModule } from './users/users.module';
     CommentsModule,
     UsersModule,
   ],
-  controllers: [AppController, UsersController],
-  providers: [AppService, UsersService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

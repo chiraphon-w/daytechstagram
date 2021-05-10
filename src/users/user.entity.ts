@@ -1,4 +1,3 @@
-import { Comment } from './../comments/comment.entity';
 import {
   BaseEntity,
   Column,
@@ -11,6 +10,8 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Post } from 'src/posts/post.entity';
+import { Comment } from './../comments/comment.entity';
+
 
 @Entity()
 @Unique(['username'])

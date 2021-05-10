@@ -20,6 +20,7 @@ export class UsersController {
 
   @Post('/signin')
   signIn(@Body() userCredentialDto: UserCredentialDto) {
-    console.log(userCredentialDto);
+    // console.log(userCredentialDto);
+    return this.usersService.signIn(userCredentialDto)
   }
 }

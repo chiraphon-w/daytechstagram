@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
-
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async createUser(userCredentialDto: UserCredentialDto): Promise<User> {
@@ -35,7 +34,18 @@ export class UserRepository extends Repository<User> {
     return user;
   }
 
-    async hashPassword(password: string, salt: string) {
-      return bcrypt.hash(password, salt);
+  async verifyUserPassword(userCredentialDto: UserCredentialDto) {
+    const { username, password } = userCredentialDto;
+    const user = await this.findOne({ username });
+
+    if (user && (await user.verifyPassword(password))) {
+      return user.username;
+    } else {
+      return null;
     }
+  }
+
+  async hashPassword(password: string, salt: string) {
+    return bcrypt.hash(password, salt);
+  }
 }

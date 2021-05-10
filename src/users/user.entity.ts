@@ -34,6 +34,11 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updated: Date;
 
+  async verifyPassword(password) {
+    const hashPassword = await bcrypt.hash(password, this.salt);
+    return this.password === hashPassword;
+  }
+
   @OneToMany(() => Post, (post) => post.user, { eager: true })
   posts: Post;
 

@@ -29,6 +29,9 @@ export class UsersService {
     const token = await this.jwtService.sign(payload);
 
     return { token };
-    // return this.userRepository.verifyUserPassword(userCredentialDto);
+  }
+
+  getUsers(user: UserEntity) {
+    return this.userRepository.find();
   }
 }

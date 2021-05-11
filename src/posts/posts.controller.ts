@@ -6,7 +6,9 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
+  Put,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -16,8 +18,9 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { CreatePostsDto } from './dto/create-posts.dto';
 import { extname } from 'path';
-import { FileInterceptor } from '@nestjs/platform-express';
 import * as fsExtra from 'fs-extra';
+import { FileInterceptor } from '@nestjs/platform-express';
+
 import { GetUsername } from 'src/users/get-username-decorator';
 import { PostEntity } from './post.entity';
 
@@ -34,36 +37,32 @@ export class PostsController {
     @Body() createPostsDto: CreatePostsDto,
     @GetUsername() user: UserEntity,
   ): Promise<PostEntity> {
-    createPostsDto.userId = user.id;
-    const post = await this.postsService.createPost(
-      createPostsDto,
-      file.filename,
-    );
-    post.userId = user.id;
-    const imageFile = post.id + extname(file.originalname);
-    fsExtra.move(file.path, `upload/${imageFile}`);
-    post.image = imageFile;
+    const post = await this.postsService.createPost(createPostsDto, file, user);
     await post.save();
     return post;
   }
 
-  // @Get()
-  // getStocks(@Query('keyword') keyword: string, @Req() req) {
-  //   return this.stockService.getProducts(keyword);
-  // }
-
   @Get()
-  getPosts() {
-    return this.postsService.getPosts();
+  getPosts(@GetUsername() user: UserEntity) {
+    return this.postsService.getPosts(user);
   }
 
   @Get('/:id')
-  getStockById(@Param('id') id: number) {
-    return this.postsService.getPostById(id);
+  getPostById(@Param('id') id: number, @GetUsername() user: UserEntity) {
+    return this.postsService.getPostById(id, user);
+  }
+
+  @Patch('/:id/desc')
+  async updatePostById(
+    @Param('id') id: number,
+    @Body('desc') desc: string,
+    @GetUsername() user: UserEntity,
+  ) {
+    return await this.postsService.updatePostById(id, desc, user);;
   }
 
   @Delete('/:id')
-  deleteStockById(@Param('id') id: number) {
-    return this.postsService.deletePostById(id);
+  deletePostById(@Param('id') id: number, @GetUsername() user: UserEntity) {
+    return this.postsService.deletePostById(id, user);
   }
 }

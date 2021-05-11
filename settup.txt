@@ -18,6 +18,8 @@ npm install @nestjs/jwt @nestjs/passport passport passport-jwt
   npm i class-transformer
   npm i change-case --save
 
+  npm i --save @types/multer
+
   nest create :
   nest g module user --no-spec
   nest g s user --no-spec

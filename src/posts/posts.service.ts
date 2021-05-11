@@ -50,8 +50,7 @@ export class PostsService {
     if (result.affected === 0) {
       throw new NotFoundException(`Post with id: ${id} is not found`);
     } else {
-      return result;
+      return found;
     }
   }
-
 }

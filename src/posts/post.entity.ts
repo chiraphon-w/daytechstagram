@@ -29,6 +29,7 @@ export class PostEntity extends BaseEntity {
 
   @Column()
   userId: number;
+  
   @ManyToOne(() => UserEntity, (user) => user.posts, { eager: false })
   user: UserEntity;
 }

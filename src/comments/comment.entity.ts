@@ -9,10 +9,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 
 @Entity()
-export class Comment extends BaseEntity {
+export class CommentEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,6 +25,6 @@ export class Comment extends BaseEntity {
   @UpdateDateColumn()
   updated: Date;
 
-  @ManyToOne(() => User, (user) => user.comments, { eager: false })
-  user: User;
+  @ManyToOne(() => UserEntity, (user) => user.comments, { eager: false })
+  user: UserEntity;
 }

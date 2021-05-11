@@ -9,13 +9,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Post } from 'src/posts/post.entity';
-import { Comment } from './../comments/comment.entity';
+import { PostEntity } from 'src/posts/post.entity';
+import { CommentEntity } from './../comments/comment.entity';
 
 
 @Entity()
 @Unique(['username'])
-export class User extends BaseEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -39,11 +39,11 @@ export class User extends BaseEntity {
     return this.password === hashPassword;
   }
 
-  @OneToMany(() => Post, (post) => post.user, { eager: true })
-  posts: Post;
+  @OneToMany(() => PostEntity, (post) => post.user, { eager: true })
+  posts: PostEntity;
 
-  @OneToMany(() => Comment, (comment) => comment.user, { eager: true })
-  comments: Comment;
+  @OneToMany(() => CommentEntity, (comment) => comment.user, { eager: true })
+  comments: CommentEntity;
 
 
 }

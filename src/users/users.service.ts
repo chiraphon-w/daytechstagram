@@ -1,7 +1,7 @@
 import { UserRepository } from './user.repository';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 import { UserCredentialDto } from './dto/user-credential.dto';
 import { JwtService } from '@nestjs/jwt';
 
@@ -12,7 +12,7 @@ export class UsersService {
     private jwtService: JwtService,
   ) {}
 
-  signUp(userCredentialDto: UserCredentialDto): Promise<User> {
+  signUp(userCredentialDto: UserCredentialDto): Promise<UserEntity> {
     return this.userRepository.createUser(userCredentialDto);
   }
 

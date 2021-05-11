@@ -1,9 +1,12 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreatePostsDto {
   @IsNotEmpty()
   desc: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   image: string;
+
+  @IsOptional()
+  userId: number;
 }

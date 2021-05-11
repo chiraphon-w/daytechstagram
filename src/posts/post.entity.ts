@@ -8,11 +8,10 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
-import { User } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/user.entity';
 
 @Entity()
-export class Post extends BaseEntity {
+export class PostEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,6 +27,8 @@ export class Post extends BaseEntity {
   @UpdateDateColumn()
   updated: Date;
 
-  @ManyToOne(() => User, (user) => user.posts, { eager: false })
-  user: User;
+  @Column()
+  userId: number;
+  @ManyToOne(() => UserEntity, (user) => user.posts, { eager: false })
+  user: UserEntity;
 }

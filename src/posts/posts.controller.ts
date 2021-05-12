@@ -29,7 +29,7 @@ import { PostEntity } from './post.entity';
 export class PostsController {
   constructor(private postsService: PostsService) {}
 
-  @Post('/upload')
+  @Post()
   @UseInterceptors(FileInterceptor('image'))
   @UsePipes(ValidationPipe)
   async addPost(

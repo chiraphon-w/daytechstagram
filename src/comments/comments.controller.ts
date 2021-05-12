@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   UseGuards,
   UsePipes,
@@ -37,7 +38,7 @@ export class CommentsController {
   }
 
   @Get('/:id')
-  getCommentById(@Param('id') id: number, @GetUsername() user: UserEntity) {
+  getCommentById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity) {
     console.log(id);
     return this.commentsService.getCommentById(id, user);
   }
@@ -50,11 +51,20 @@ export class CommentsController {
     return this.commentsService.getCommentByPostId(postId, user);
   }
 
+  @Patch('/:id/desc')
+  async updatePostById(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('desc') desc: string,
+    @GetUsername() user: UserEntity,
+  ) {
+    return await this.commentsService.updateCommentById(id, desc, user);
+  }
+
   @Delete('/:id')
   deleteComment(
-      @Param('id', ParseIntPipe) id: number,
-      @GetUsername() user: UserEntity,
-      ) {
-      return this.commentsService.deleteCommentById(id, user)
+    @Param('id', ParseIntPipe) id: number,
+    @GetUsername() user: UserEntity,
+  ) {
+    return this.commentsService.deleteCommentById(id, user);
   }
 }

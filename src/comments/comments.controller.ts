@@ -33,12 +33,12 @@ export class CommentsController {
   }
 
   @Get()
-  getComments(@GetUsername() user: UserEntity) {
+  getComments(@GetUsername() user: UserEntity): Promise<CommentEntity[]>  {
     return this.commentsService.getComments(user);
   }
 
   @Get('/:id')
-  getCommentById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity) {
+  getCommentById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity): Promise<CommentEntity>  {
     console.log(id);
     return this.commentsService.getCommentById(id, user);
   }
@@ -56,7 +56,7 @@ export class CommentsController {
     @Param('id', ParseIntPipe) id: number,
     @Body('desc') desc: string,
     @GetUsername() user: UserEntity,
-  ) {
+  ): Promise<CommentEntity> {
     return await this.commentsService.updateCommentById(id, desc, user);
   }
 
@@ -64,7 +64,7 @@ export class CommentsController {
   deleteComment(
     @Param('id', ParseIntPipe) id: number,
     @GetUsername() user: UserEntity,
-  ) {
+  ): Promise<CommentEntity> {
     return this.commentsService.deleteCommentById(id, user);
   }
 }

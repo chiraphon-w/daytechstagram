@@ -44,12 +44,12 @@ export class PostsController {
   }
 
   @Get()
-  getPosts(@GetUsername() user: UserEntity) {
+  getPosts(@GetUsername() user: UserEntity): Promise<PostEntity[]> {
     return this.postsService.getPosts(user);
   }
 
   @Get('/:id')
-  getPostById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity) {
+  getPostById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity): Promise<PostEntity> {
     return this.postsService.getPostById(id, user);
   }
 
@@ -58,12 +58,12 @@ export class PostsController {
     @Param('id', ParseIntPipe) id: number,
     @Body('desc') desc: string,
     @GetUsername() user: UserEntity,
-  ) {
-    return await this.postsService.updatePostById(id, desc, user);;
+  ): Promise<PostEntity> {
+    return await this.postsService.updatePostById(id, desc, user);
   }
 
   @Delete('/:id')
-  deletePostById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity) {
+  deletePostById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity): Promise<PostEntity> {
     return this.postsService.deletePostById(id, user);
   }
 }

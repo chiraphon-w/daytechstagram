@@ -20,7 +20,6 @@ export class UserRepository extends Repository<UserEntity> {
     try {
       await user.save();
     } catch (error) {
-      //   console.log(error);
       if (error.code === '23505') {
         throw new ConflictException(
           'Error, because this username already exist!',
@@ -33,7 +32,7 @@ export class UserRepository extends Repository<UserEntity> {
     return user;
   }
 
-  async verifyUserPassword(userCredentialDto: UserCredentialDto) {
+  async verifyUserPassword(userCredentialDto: UserCredentialDto): Promise<string> {
     const { username, password } = userCredentialDto;
     const user = await this.findOne({ username });
 
@@ -44,7 +43,7 @@ export class UserRepository extends Repository<UserEntity> {
     }
   }
 
-  async hashPassword(password: string, salt: string) {
+  async hashPassword(password: string, salt: string): Promise<string> {
     return bcrypt.hash(password, salt);
   }
 }

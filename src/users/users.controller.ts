@@ -23,31 +23,30 @@ export class UsersController {
 
   @Post('/signup')
   @UsePipes(ValidationPipe)
-  signUp(@Body() userCredentialDto: UserCredentialDto) {
+  signUp(@Body() userCredentialDto: UserCredentialDto): Promise<UserEntity> {
     return this.usersService.signUp(userCredentialDto);
   }
 
   @Post('/signin')
-  signIn(@Body() userCredentialDto: UserCredentialDto) {
-    // console.log(userCredentialDto);
+  signIn(@Body() userCredentialDto: UserCredentialDto): Promise<{
+    token: string;
+  }> {
     return this.usersService.signIn(userCredentialDto);
   }
 
   @Get()
   @UseGuards(AuthGuard())
-  getUsers(user: UserEntity) {
+  getUsers(user: UserEntity): Promise<UserEntity[]> {
     return this.usersService.getUsers(user);
   }
 
   @Get('/:id')
-  getUserById(@Param('id', ParseIntPipe) id: number) {
+  getUserById(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
     return this.usersService.getUserById(id);
   }
 
   @Get('/:id/posts')
-    getPostsByUserId(
-        @Param('id', ParseIntPipe) id: number,
-        ): Promise<PostEntity> {
-        return this.usersService.getPostsByUserId(id)
-    }
+  getPostsByUserId(@Param('id', ParseIntPipe) id: number): Promise<PostEntity> {
+    return this.usersService.getPostsByUserId(id);
+  }
 }

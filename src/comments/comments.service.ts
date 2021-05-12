@@ -58,7 +58,7 @@ export class CommentsService {
     return comment;
   }
 
-  async deleteCommentById(id: number, user: UserEntity) {
+  async deleteCommentById(id: number, user: UserEntity): Promise<CommentEntity>  {
     const found = await this.getCommentById(id, user);
     const result = await this.commentRepository.delete({ id, userId: user.id });
     if (result.affected === 0) {

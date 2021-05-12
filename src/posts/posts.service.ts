@@ -17,15 +17,15 @@ export class PostsService {
     createPostDto: CreatePostDto,
     file: Express.Multer.File,
     user: UserEntity,
-  ) {
+  ): Promise<PostEntity> {
     return await this.postRepository.createPost(createPostDto, file, user);
   }
 
-  getPosts(user: UserEntity) {
+  getPosts(user: UserEntity): Promise<PostEntity[]> {
     return this.postRepository.find();
   }
 
-  async getPostById(id: number, user: UserEntity) {
+  async getPostById(id: number, user: UserEntity): Promise<PostEntity> {
     const found = await this.postRepository.findOne({
       where: { id, userId: user.id }, // id = id ของ post, userId = user id ของคนที่สร้าง post, user.id = signIn เข้ามา
     });
@@ -35,14 +35,14 @@ export class PostsService {
     return found;
   }
 
-  async updatePostById(id: number, desc: string, user: UserEntity) {
+  async updatePostById(id: number, desc: string, user: UserEntity): Promise<PostEntity> {
     const post = await this.getPostById(id, user);
     post.desc = desc;
     await post.save();
     return post;
   }
 
-  async deletePostById(id: number, user: UserEntity) {
+  async deletePostById(id: number, user: UserEntity): Promise<PostEntity> {
     const found = await this.getPostById(id, user);
     const { image } = found;
     await fsExtra.remove(`upload/${image}`); //เอาไว้ลบรูป

@@ -21,7 +21,9 @@ export class UsersService {
     return this.userRepository.createUser(userCredentialDto);
   }
 
-  async signIn(userCredentialDto: UserCredentialDto) {
+  async signIn(userCredentialDto: UserCredentialDto): Promise<{
+    token: string;
+  }> {
     const username = await this.userRepository.verifyUserPassword(
       userCredentialDto,
     );
@@ -35,7 +37,7 @@ export class UsersService {
     return { token };
   }
 
-  getUsers(user: UserEntity) {
+  getUsers(user: UserEntity): Promise<UserEntity[]> {
     return this.userRepository.find();
   }
 
@@ -50,15 +52,13 @@ export class UsersService {
     return found;
   }
 
-  async getPostsByUserId(
-    id: number,
-    ): Promise<PostEntity> {
-    const found = await this.userRepository.findOne({ where: { id } })
+  async getPostsByUserId(id: number): Promise<PostEntity> {
+    const found = await this.userRepository.findOne({ where: { id } });
 
     if (!found) {
-        throw new NotFoundException(`User with id: ${id} not found`)
+      throw new NotFoundException(`User with id: ${id} not found`);
     }
 
-    return found.posts
-}
+    return found.posts;
+  }
 }

@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   Req,
   UseGuards,
@@ -13,6 +15,7 @@ import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUsername } from './get-username-decorator';
 import { UserEntity } from './user.entity';
+import { PostEntity } from 'src/posts/post.entity';
 
 @Controller('users')
 export class UsersController {
@@ -32,10 +35,19 @@ export class UsersController {
 
   @Get()
   @UseGuards(AuthGuard())
-  getUsers(@Req() req, user: UserEntity) {
-    // console.log(req)
-    // return req.user.username
-    // return username;
+  getUsers(user: UserEntity) {
     return this.usersService.getUsers(user);
   }
+
+  @Get('/:id')
+  getUserById(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.getUserById(id);
+  }
+
+  @Get('/:id/posts')
+    getPostsByUserId(
+        @Param('id', ParseIntPipe) id: number,
+        ): Promise<PostEntity> {
+        return this.usersService.getPostsByUserId(id)
+    }
 }

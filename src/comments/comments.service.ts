@@ -29,7 +29,7 @@ export class CommentsService {
     });
 
     if (!found) {
-      throw new NotFoundException(`Comment with id: ${id} is not found!!!`);
+      throw new NotFoundException(`Comment with id: ${id} not found!!!`);
     }
     return found;
   }
@@ -42,7 +42,7 @@ export class CommentsService {
       where: { postId, userId: user.id }, // id = id ของ comment
     });
     if (!found) {
-      throw new NotFoundException(`Comment with id: ${postId} is not found!!!`);
+      throw new NotFoundException(`Comment with id: ${postId} not found!!!`);
     }
     return found;
   }
@@ -62,7 +62,7 @@ export class CommentsService {
     const found = await this.getCommentById(id, user);
     const result = await this.commentRepository.delete({ id, userId: user.id });
     if (result.affected === 0) {
-      throw new NotFoundException(`Comment with id: ${id} is not found`);
+      throw new NotFoundException(`Comment with id: ${id} not found`);
     } else {
       return found;
     }

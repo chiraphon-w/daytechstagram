@@ -6,6 +6,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Put,
@@ -48,13 +49,13 @@ export class PostsController {
   }
 
   @Get('/:id')
-  getPostById(@Param('id') id: number, @GetUsername() user: UserEntity) {
+  getPostById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity) {
     return this.postsService.getPostById(id, user);
   }
 
   @Patch('/:id/desc')
   async updatePostById(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body('desc') desc: string,
     @GetUsername() user: UserEntity,
   ) {
@@ -62,7 +63,7 @@ export class PostsController {
   }
 
   @Delete('/:id')
-  deletePostById(@Param('id') id: number, @GetUsername() user: UserEntity) {
+  deletePostById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity) {
     return this.postsService.deletePostById(id, user);
   }
 }

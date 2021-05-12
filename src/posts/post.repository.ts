@@ -1,4 +1,4 @@
-import { CreatePostsDto } from './dto/create-posts.dto';
+import { CreatePostDto } from './dto/create-post.dto';
 import { EntityRepository, Repository } from 'typeorm';
 import { PostEntity } from './post.entity';
 import { extname } from 'path';
@@ -8,11 +8,11 @@ import { UserEntity } from 'src/users/user.entity';
 @EntityRepository(PostEntity)
 export class PostRepository extends Repository<PostEntity> {
   async createPost(
-    createPostsDto: CreatePostsDto,
+    createPostDto: CreatePostDto,
     file: Express.Multer.File,
     user: UserEntity,
   ): Promise<PostEntity> {
-    const { desc, image } = createPostsDto;
+    const { desc } = createPostDto;
     const post = new PostEntity();
     post.desc = desc;
     post.user = user;
@@ -28,20 +28,4 @@ export class PostRepository extends Repository<PostEntity> {
     return post;
   }
 
-  // async updatePost(
-  //   file: Express.Multer.File,
-  //   id: number,
-  //   createPostsDto: CreatePostsDto,
-  //   user: UserEntity,
-  // ) {
-  //   if (file) {
-  //     fsExtra.remove(`upload/${post.image}`);
-  //     const imageFile = post.id + extname(post.file.filename);
-  //     fsExtra.move(post.file.path, `upload/${imageFile}`);
-  //     post.image = imageFile;
-  //     await post.save();
-  //   }
-  //   delete post.user;
-  //   return post;
-  // }
 }

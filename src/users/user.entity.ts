@@ -13,7 +13,7 @@ import { PostEntity } from 'src/posts/post.entity';
 import { CommentEntity } from './../comments/comment.entity';
 
 
-@Entity()
+@Entity({ name: 'user' })
 @Unique(['username'])
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()

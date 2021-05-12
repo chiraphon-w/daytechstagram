@@ -5,13 +5,12 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
 import { UserEntity } from 'src/users/user.entity';
+import { PostEntity } from 'src/posts/post.entity';
 
-@Entity()
+@Entity({ name: 'comment' })
 export class CommentEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,6 +24,21 @@ export class CommentEntity extends BaseEntity {
   @UpdateDateColumn()
   updated: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.comments, { eager: false })
+  @Column()
+  userId: number;
+
+  @Column()
+  postId: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.comments, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
+
+  @ManyToOne(() => PostEntity, (post) => post.comments, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
+  post: PostEntity;
 }

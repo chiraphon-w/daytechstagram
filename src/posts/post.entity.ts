@@ -4,13 +4,15 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from 'src/users/user.entity';
+import { CommentEntity } from 'src/comments/comment.entity';
 
-@Entity()
+@Entity({ name: 'post' })
 export class PostEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -30,6 +32,10 @@ export class PostEntity extends BaseEntity {
   @Column()
   userId: number;
   
-  @ManyToOne(() => UserEntity, (user) => user.posts, { eager: false })
+  @ManyToOne(() => UserEntity, (user) => user.posts, { eager: false, onDelete: 'CASCADE' })
   user: UserEntity;
+
+  @OneToMany(() => CommentEntity, (comment) => comment.post, { eager: true })
+  comments: CommentEntity;
+
 }

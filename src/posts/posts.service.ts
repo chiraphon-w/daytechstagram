@@ -1,4 +1,4 @@
-import { CreatePostsDto } from './dto/create-posts.dto';
+import { CreatePostDto } from './dto/create-post.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PostRepository } from './post.repository';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,11 +14,11 @@ export class PostsService {
     private postRepository: PostRepository,
   ) {}
   async createPost(
-    createPostsDto: CreatePostsDto,
+    createPostDto: CreatePostDto,
     file: Express.Multer.File,
     user: UserEntity,
   ) {
-    return await this.postRepository.createPost(createPostsDto, file, user);
+    return await this.postRepository.createPost(createPostDto, file, user);
   }
 
   getPosts(user: UserEntity) {

@@ -16,7 +16,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { CreatePostsDto } from './dto/create-posts.dto';
+import { CreatePostDto } from './dto/create-post.dto';
 import { extname } from 'path';
 import * as fsExtra from 'fs-extra';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -29,15 +29,15 @@ import { PostEntity } from './post.entity';
 export class PostsController {
   constructor(private postsService: PostsService) {}
 
-  @Post()
+  @Post('/upload')
   @UseInterceptors(FileInterceptor('image'))
   @UsePipes(ValidationPipe)
   async addPost(
     @UploadedFile() file,
-    @Body() createPostsDto: CreatePostsDto,
+    @Body() createPostDto: CreatePostDto,
     @GetUsername() user: UserEntity,
   ): Promise<PostEntity> {
-    const post = await this.postsService.createPost(createPostsDto, file, user);
+    const post = await this.postsService.createPost(createPostDto, file, user);
     await post.save();
     return post;
   }

@@ -21,7 +21,7 @@ export class PostsService {
     return await this.postRepository.createPost(createPostDto, file, user);
   }
 
-  getPosts(user: UserEntity): Promise<PostEntity[]> {
+  getPosts(): Promise<PostEntity[]> {
     return this.postRepository.find();
   }
 

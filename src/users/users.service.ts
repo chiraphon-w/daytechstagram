@@ -37,7 +37,7 @@ export class UsersService {
     return { token };
   }
 
-  getUsers(user: UserEntity): Promise<UserEntity[]> {
+  getUsers(): Promise<UserEntity[]> {
     return this.userRepository.find();
   }
 

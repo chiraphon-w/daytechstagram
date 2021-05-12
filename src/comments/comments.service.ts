@@ -19,7 +19,7 @@ export class CommentsService {
     return this.commentRepository.createComment(createCommentDto, user);
   }
 
-  getComments(user: UserEntity): Promise<CommentEntity[]> {
+  getComments(): Promise<CommentEntity[]> {
     return this.commentRepository.find();
   }
 

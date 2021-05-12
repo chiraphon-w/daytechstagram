@@ -39,13 +39,12 @@ export class PostsController {
     @GetUsername() user: UserEntity,
   ): Promise<PostEntity> {
     const post = await this.postsService.createPost(createPostDto, file, user);
-    await post.save();
     return post;
   }
 
   @Get()
-  getPosts(@GetUsername() user: UserEntity): Promise<PostEntity[]> {
-    return this.postsService.getPosts(user);
+  getPosts(): Promise<PostEntity[]> {
+    return this.postsService.getPosts();
   }
 
   @Get('/:id')

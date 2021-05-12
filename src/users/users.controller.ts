@@ -36,8 +36,8 @@ export class UsersController {
 
   @Get()
   @UseGuards(AuthGuard())
-  getUsers(user: UserEntity): Promise<UserEntity[]> {
-    return this.usersService.getUsers(user);
+  getUsers(): Promise<UserEntity[]> {
+    return this.usersService.getUsers();
   }
 
   @Get('/:id')

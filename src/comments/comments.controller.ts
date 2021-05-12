@@ -33,8 +33,8 @@ export class CommentsController {
   }
 
   @Get()
-  getComments(@GetUsername() user: UserEntity): Promise<CommentEntity[]>  {
-    return this.commentsService.getComments(user);
+  getComments(): Promise<CommentEntity[]>  {
+    return this.commentsService.getComments();
   }
 
   @Get('/:id')

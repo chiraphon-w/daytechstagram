@@ -28,18 +28,29 @@ export class CommentsService {
       where: { id }, // id = id ของ comment
     });
     if (!found) {
-      throw new NotFoundException(`Comment ${id} is not found!!!`);
+      throw new NotFoundException(`Comment with id: ${id} is not found!!!`);
     }
     return found;
   }
 
   async getCommentByPostId(postId: number, user: UserEntity) {
     const found = await this.commentRepository.findOne({
-      where: { postId, userId: user.id}, // id = id ของ comment
+      where: { postId, userId: user.id }, // id = id ของ comment
     });
     if (!found) {
-      throw new NotFoundException(`Comment ${postId} is not found!!!`);
+      throw new NotFoundException(`Comment with id: ${postId} is not found!!!`);
     }
     return found;
+  }
+
+  async deleteCommentById(id: number, user: UserEntity) {
+    const found = await this.getCommentById(id, user);
+
+    const result = await this.commentRepository.delete({ id, userId: user.id });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Comment with id: ${id} is not found`);
+    } else {
+      return found;
+    }
   }
 }

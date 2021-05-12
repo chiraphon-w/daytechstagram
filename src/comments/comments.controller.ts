@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -47,5 +48,13 @@ export class CommentsController {
     @GetUsername() user: UserEntity,
   ): Promise<CommentEntity> {
     return this.commentsService.getCommentByPostId(postId, user);
+  }
+
+  @Delete('/:id')
+  deleteComment(
+      @Param('id', ParseIntPipe) id: number,
+      @GetUsername() user: UserEntity,
+      ) {
+      return this.commentsService.deleteCommentById(id, user)
   }
 }

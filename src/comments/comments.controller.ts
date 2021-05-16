@@ -39,7 +39,6 @@ export class CommentsController {
 
   @Get('/:id')
   getCommentById(@Param('id', ParseIntPipe) id: number, @GetUsername() user: UserEntity): Promise<CommentEntity>  {
-    console.log(id);
     return this.commentsService.getCommentById(id, user);
   }
 
